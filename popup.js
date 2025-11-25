@@ -250,15 +250,28 @@ async function sendRequest() {
     // Get response body
     const contentType = response.headers.get('content-type');
     let responseText;
+    let isFormattedJson = false;
 
     if (contentType && contentType.includes('application/json')) {
-      const json = await response.json();
-      responseText = formatJSON(json);
+      try {
+        const json = await response.json();
+        responseText = formatJSON(json);
+        isFormattedJson = true;
+      } catch (parseError) {
+        // If JSON parsing fails, treat as plain text
+        responseText = await response.text();
+      }
     } else {
       responseText = await response.text();
     }
 
-    responseContent.innerHTML = responseText;
+    // Use innerHTML only for our formatted JSON (which is safely escaped in formatJSON)
+    // Use textContent for plain text to prevent XSS
+    if (isFormattedJson) {
+      responseContent.innerHTML = responseText;
+    } else {
+      responseContent.textContent = responseText;
+    }
     responseBody.classList.remove('hidden');
 
   } catch (error) {
