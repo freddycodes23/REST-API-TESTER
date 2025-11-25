@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REST API Tester</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>REST API Tester</h1>
+    </header>
+
+    <!-- Saved Endpoints Section -->
+    <section class="saved-endpoints">
+      <div class="section-header">
+        <h2>Saved Endpoints</h2>
+        <button id="saveEndpointBtn" class="btn btn-secondary">Save Current</button>
+      </div>
+      <div id="savedEndpointsList" class="endpoints-list"></div>
+    </section>
+
+    <!-- Request Builder Section -->
+    <section class="request-builder">
+      <div class="request-line">
+        <select id="httpMethod">
+          <option value="GET">GET</option>
+          <option value="POST">POST</option>
+          <option value="PUT">PUT</option>
+          <option value="PATCH">PATCH</option>
+          <option value="DELETE">DELETE</option>
+        </select>
+        <input type="url" id="urlInput" placeholder="Enter request URL" autocomplete="off">
+        <button id="sendBtn" class="btn btn-primary">Send</button>
+      </div>
+
+      <!-- Headers Section -->
+      <div class="collapsible-section">
+        <div class="section-toggle" id="headersToggle">
+          <span>Headers</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content" id="headersContent">
+          <div id="headersContainer">
+            <div class="header-row">
+              <input type="text" class="header-key" placeholder="Header name">
+              <input type="text" class="header-value" placeholder="Header value">
+              <button class="btn btn-remove" title="Remove header">×</button>
+            </div>
+          </div>
+          <button id="addHeaderBtn" class="btn btn-add">+ Add Header</button>
+        </div>
+      </div>
+
+      <!-- Body Section -->
+      <div class="collapsible-section">
+        <div class="section-toggle" id="bodyToggle">
+          <span>Body</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content" id="bodyContent">
+          <div class="body-type-selector">
+            <label>
+              <input type="radio" name="bodyType" value="none" checked> None
+            </label>
+            <label>
+              <input type="radio" name="bodyType" value="json"> JSON
+            </label>
+            <label>
+              <input type="radio" name="bodyType" value="form"> Form Data
+            </label>
+          </div>
+          <div id="bodyInputContainer" class="hidden">
+            <textarea id="bodyInput" placeholder="Enter request body"></textarea>
+          </div>
+          <div id="formDataContainer" class="hidden">
+            <div id="formDataFields">
+              <div class="form-data-row">
+                <input type="text" class="form-key" placeholder="Key">
+                <input type="text" class="form-value" placeholder="Value">
+                <button class="btn btn-remove" title="Remove field">×</button>
+              </div>
+            </div>
+            <button id="addFormFieldBtn" class="btn btn-add">+ Add Field</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Response Section -->
+    <section class="response-section">
+      <div class="response-header">
+        <h2>Response</h2>
+        <div id="responseStatus" class="status-badge hidden"></div>
+        <div id="responseTime" class="response-time hidden"></div>
+      </div>
+      <div id="responseLoader" class="loader hidden">
+        <div class="spinner"></div>
+        <span>Sending request...</span>
+      </div>
+      <div id="responseError" class="error-message hidden"></div>
+      <div id="responseBody" class="response-body">
+        <pre><code id="responseContent">Send a request to see the response here</code></pre>
+      </div>
+    </section>
+  </div>
+
+  <!-- Save Endpoint Modal -->
+  <div id="saveModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Save Endpoint</h3>
+      <input type="text" id="endpointName" placeholder="Enter endpoint name">
+      <div class="modal-actions">
+        <button id="cancelSaveBtn" class="btn btn-secondary">Cancel</button>
+        <button id="confirmSaveBtn" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
